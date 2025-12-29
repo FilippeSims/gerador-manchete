@@ -1,15 +1,25 @@
 {
   "compilerOptions": {
     "target": "ES2018",
-    "module": "commonjs",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "jsx": "react-jsx",
     "strict": true,
     "noEmit": true,
-    "lib": ["es2015"],
+    "lib": [
+      "es2015",
+      "esnext"
+    ],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true
   },
-  "exclude": ["remotion.config.ts"]
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifiers": true
+  },
+  "exclude": [
+    "remotion.config.ts"
+  ]
 }
