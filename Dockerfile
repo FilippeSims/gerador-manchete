@@ -1,29 +1,46 @@
-# Use the official Remotion image which comes with Chromium and FFmpeg pre-installed
-FROM ghcr.io/remotion-dev/template-helloworld:latest
+# 1. Usamos a imagem oficial do Node (versão completa para ter dependências do sistema)
+FROM node:18-bullseye
 
-# Set working directory
+# 2. Instalar FFmpeg e dependências necessárias para o Chromium (Puppeteer)
+# O Remotion precisa do Chrome e FFmpeg para renderizar o vídeo
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    chromium \
+    libnss3 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    libgbm1 \
+    libasound2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# 3. Definir variáveis de ambiente para o Puppeteer encontrar o Chromium instalado
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
+# 4. Definir diretório de trabalho
 WORKDIR /app
 
-# Switch to root to install dependencies and manage permissions
-USER root
-
-# Copy package files
+# 5. Copiar arquivos de dependências
 COPY package*.json ./
 
-# Install dependencies
+# 6. Instalar dependências do Node (incluindo ts-node)
 RUN npm install
 
-# Copy the rest of the application
+# 7. Copiar o restante da aplicação
 COPY . .
 
-# Adjust permissions for the out directory (where videos are rendered)
+# 8. Criar pastas necessárias e ajustar permissões (Importante para o Remotion escrever o vídeo)
 RUN mkdir -p out && chmod 777 out
-
-# Create public assets directory if it doesn't exist
 RUN mkdir -p public/assets && chmod 777 public/assets
 
-# Use port 3000
+# 9. Expor a porta
 EXPOSE 3000
 
-# Start the API
+# 10. Iniciar a API com ts-node (conforme configurado no package.json)
 CMD ["npm", "run", "start:api"]
