@@ -6,24 +6,34 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "start:api": "ts-node server.ts"
   },
   "repository": {},
   "license": "UNLICENSED",
   "dependencies": {
+    "@remotion/bundler": "^4.0.397",
     "@remotion/cli": "^4.0.0",
+    "@remotion/renderer": "^4.0.397",
     "@remotion/zod-types": "^4.0.0",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "remotion": "^4.0.0",
+    "uuid": "^13.0.0",
     "zod": "3.22.3"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "^4.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
     "@types/react": "19.2.7",
+    "@types/uuid": "^10.0.0",
     "@types/web": "0.0.166",
     "eslint": "9.19.0",
     "prettier": "3.6.0",
+    "ts-node": "^10.9.2",
     "typescript": "5.9.3"
   },
   "private": true
