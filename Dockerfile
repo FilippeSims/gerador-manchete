@@ -29,7 +29,7 @@ WORKDIR /app
 # 5. Copiar arquivos de dependências
 COPY package*.json ./
 
-# 6. Instalar dependências do Node (incluindo ts-node)
+# 6. Instalar dependências do Node (incluindo tsx)
 RUN npm install
 
 # 7. Copiar o restante da aplicação
@@ -42,5 +42,5 @@ RUN mkdir -p public/assets && chmod 777 public/assets
 # 9. Expor a porta
 EXPOSE 3000
 
-# 10. Iniciar a API com ts-node (conforme configurado no package.json)
+# 10. Iniciar a API com tsx (conforme configurado no package.json)
 CMD ["npm", "run", "start:api"]
